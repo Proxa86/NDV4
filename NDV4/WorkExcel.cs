@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
+using OfficeOpenXml;
+using System.Drawing;
+using OfficeOpenXml.Style;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Data;
@@ -51,33 +54,32 @@ namespace NDV4
 
             try
             {
-                var excelApp = new Excel.Application();
-
-                excelApp.Visible = true;
-                excelApp.Workbooks.Add();
-                Excel._Worksheet worksheet = (Excel.Worksheet)excelApp.ActiveSheet;
-                worksheet.Cells[1, "A"] = "Number marker";
-                worksheet.Cells[1, "B"] = "Path";
-
-                DataTable dTableSrc = new DataTable();
-                SqlQuery = "SELECT * FROM WorkMarker WHERE markerInBin = 1";
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
-                adapter.Fill(dTableSrc);
-
-                int i;
-
-                if (dTableSrc.Rows.Count > 0)
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                using (var package = new ExcelPackage())
                 {
-                    for (i = 0; i < dTableSrc.Rows.Count; i++)
-                    {
-                        string pathSrcLab = dTableSrc.Rows[i].ItemArray[4].ToString();
-                        string marker = dTableSrc.Rows[i].ItemArray[6].ToString();
-                        worksheet.Cells[i + 2, "A"] = marker;
-                        worksheet.Cells[i + 2, "B"] = pathSrcLab;
-                    }
-                    //worksheet.Columns[1].AutoFit();
-                    //worksheet.Columns[2].AutoFit();
+                    var worksheet = package.Workbook.Worksheets.Add("Found marker");
+                    worksheet.Cells[1, 1].Value = "Number marker";
+                    worksheet.Cells[1, 2].Value = "Path";
 
+                    DataTable dTableSrc = new DataTable();
+                    SqlQuery = "SELECT * FROM WorkMarker WHERE markerInBin = 1";
+                    SQLiteDataAdapter adapter = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
+                    adapter.Fill(dTableSrc);
+
+                    int i;
+                    //
+                    if (dTableSrc.Rows.Count > 0)
+                    {
+                        for (i = 0; i < dTableSrc.Rows.Count; i++)
+                        {
+                            string pathSrcLab = dTableSrc.Rows[i].ItemArray[4].ToString();
+                            string marker = dTableSrc.Rows[i].ItemArray[6].ToString();
+                            worksheet.Cells["A" + (i+2)].Value = marker;
+                            worksheet.Cells["B" + (i+2)].Value = pathSrcLab;
+                        }
+                        worksheet.Cells.AutoFitColumns(1);
+                    }
+                    package.SaveAs(new FileInfo("Found marker.xlsx"));
                 }
             }
             catch (System.Runtime.InteropServices.COMException ex)
@@ -101,11 +103,12 @@ namespace NDV4
 
             try
             {
-                var excelApp = new Excel.Application();
+                
+                    //var excelApp = new Excel.Application();
 
-                excelApp.Visible = true;
-                excelApp.Workbooks.Add();
-                Excel._Worksheet worksheet = (Excel.Worksheet)excelApp.ActiveSheet;
+                    //excelApp.Visible = true;
+                    //excelApp.Workbooks.Add();
+                    //Excel._Worksheet worksheet = (Excel.Worksheet)excelApp.ActiveSheet;
 
                 DataTable dTableBinName = new DataTable();
                 
@@ -119,40 +122,46 @@ namespace NDV4
 
                 if (dTableBinName.Rows.Count > 0)
                 {
-                    for (i = 0; i < dTableBinName.Rows.Count; i++)
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    using (var package = new ExcelPackage())
                     {
-                        string pathBin = dTableBinName.Rows[i].ItemArray[3].ToString();
-                        worksheet.Cells[k, "A"] = pathBin;
-                        string idBin = dTableBinName.Rows[i].ItemArray[1].ToString();
-
-                        DataTable dTableBinMarker = new DataTable();
-                        SqlQuery = "SELECT DISTINCT markerBin FROM BinMarker WHERE idBin = " + idBin;
-                        adapterBin = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
-                        adapterBin.Fill(dTableBinMarker);
-                        if (dTableBinMarker.Rows.Count > 0)
+                        var worksheet = package.Workbook.Worksheets.Add("Found marker in bin");
+                        worksheet.Cells[1, 1].Value = "Binary";
+                        worksheet.Cells[1, 2].Value = "Number marker";
+                        worksheet.Cells[1, 3].Value = "Path";
+                        for (i = 0; i < dTableBinName.Rows.Count; i++)
                         {
-                            for (j = 0; j < dTableBinMarker.Rows.Count; j++)
-                            {
-                                DataTable dTableNameSrc = new DataTable();
-                                string marker = dTableBinMarker.Rows[j].ItemArray[0].ToString();
-                                SqlQuery = "SELECT pathLabFiles FROM WorkMarker WHERE marker = '" + marker + "'";
-                                adapterBin = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
-                                adapterBin.Fill(dTableNameSrc);
-                                if (dTableNameSrc.Rows.Count > 0)
-                                {
-                                    string pathSrc = dTableNameSrc.Rows[0].ItemArray[0].ToString();
-                                    worksheet.Cells[k + 1, "B"] = marker;
-                                    worksheet.Cells[k + 1, "C"] = pathSrc;
-                                }
-                                ++k;
-                            }
-                                   
-                        }
-                        ++k;
-                    }
-                    //worksheet.Columns[1].AutoFit();
-                    //worksheet.Columns[2].AutoFit();
+                            string pathBin = dTableBinName.Rows[i].ItemArray[3].ToString();
+                            worksheet.Cells["A"+ (k + 1)].Value = pathBin;
+                            string idBin = dTableBinName.Rows[i].ItemArray[1].ToString();
 
+                            DataTable dTableBinMarker = new DataTable();
+                            SqlQuery = "SELECT DISTINCT markerBin FROM BinMarker WHERE idBin = " + idBin;
+                            adapterBin = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
+                            adapterBin.Fill(dTableBinMarker);
+                            if (dTableBinMarker.Rows.Count > 0)
+                            {
+                                for (j = 0; j < dTableBinMarker.Rows.Count; j++)
+                                {
+                                    DataTable dTableNameSrc = new DataTable();
+                                    string marker = dTableBinMarker.Rows[j].ItemArray[0].ToString();
+                                    SqlQuery = "SELECT pathLabFiles FROM WorkMarker WHERE marker = '" + marker + "'";
+                                    adapterBin = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
+                                    adapterBin.Fill(dTableNameSrc);
+                                    if (dTableNameSrc.Rows.Count > 0)
+                                    {
+                                        string pathSrc = dTableNameSrc.Rows[0].ItemArray[0].ToString();
+                                        worksheet.Cells["B" + (k + 2)].Value = marker;
+                                        worksheet.Cells["C" + (k + 2)].Value = pathSrc;
+                                    }
+                                    ++k;
+                                }
+                            }
+                            ++k;
+                        }
+                        worksheet.Cells.AutoFitColumns(1);
+                        package.SaveAs(new FileInfo("Found marker in bin.xlsx"));
+                    }
                 }
             }
             catch(System.Runtime.InteropServices.COMException ex)
@@ -183,12 +192,12 @@ namespace NDV4
                 
             try
             {
-                var excelApp = new Excel.Application();
-                excelApp.Visible = true;
-                excelApp.Workbooks.Add();
-                Excel._Worksheet worksheet = (Excel.Worksheet)excelApp.ActiveSheet;
-                worksheet.Cells[1, "A"] = "Number marker";
-                worksheet.Cells[1, "B"] = "Path";
+                //var excelApp = new Excel.Application();
+                //excelApp.Visible = true;
+                //excelApp.Workbooks.Add();
+                //Excel._Worksheet worksheet = (Excel.Worksheet)excelApp.ActiveSheet;
+                //worksheet.Cells[1, "A"] = "Number marker";
+                //worksheet.Cells[1, "B"] = "Path";
 
                 DataTable dTableSrc = new DataTable();
                 if(Form1.CheckSharp)
@@ -273,16 +282,22 @@ namespace NDV4
 
                 if (dTableSrc.Rows.Count > 0)
                 {
-                    for (i = 0; i < dTableSrc.Rows.Count; i++)
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    using (var package = new ExcelPackage())
                     {
-                        string pathSrcLab = dTableSrc.Rows[i].ItemArray[0].ToString();
-                        string marker = dTableSrc.Rows[i].ItemArray[1].ToString();
-                        worksheet.Cells[i + 2, "A"] = marker;
-                        worksheet.Cells[i + 2, "B"] = pathSrcLab;
+                        var worksheet = package.Workbook.Worksheets.Add("Not found marker in bin");
+                        worksheet.Cells[1, 1].Value = "Number marker";
+                        worksheet.Cells[1, 2].Value = "Path";
+                        for (i = 0; i < dTableSrc.Rows.Count; i++)
+                        {
+                            string pathSrcLab = dTableSrc.Rows[i].ItemArray[0].ToString();
+                            string marker = dTableSrc.Rows[i].ItemArray[1].ToString();
+                            worksheet.Cells["A" + (i + 2)].Value = marker;
+                            worksheet.Cells["B" + (i + 2)].Value = pathSrcLab;
+                        }
+                        worksheet.Cells.AutoFitColumns(1);
+                        package.SaveAs(new FileInfo("Not found marker in bin.xlsx"));
                     }
-                    //worksheet.Columns[1].AutoFit();
-                    //worksheet.Columns[2].AutoFit();
-
                 }
             }
             catch (System.Runtime.InteropServices.COMException ex)
