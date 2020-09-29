@@ -54,9 +54,11 @@
             this.gbCreateNewProject.Controls.Add(this.lLocationProject);
             this.gbCreateNewProject.Controls.Add(this.tbNameProject);
             this.gbCreateNewProject.Controls.Add(this.lNameProject);
-            this.gbCreateNewProject.Location = new System.Drawing.Point(13, 13);
+            this.gbCreateNewProject.Location = new System.Drawing.Point(15, 15);
+            this.gbCreateNewProject.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbCreateNewProject.Name = "gbCreateNewProject";
-            this.gbCreateNewProject.Size = new System.Drawing.Size(409, 132);
+            this.gbCreateNewProject.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gbCreateNewProject.Size = new System.Drawing.Size(477, 152);
             this.gbCreateNewProject.TabIndex = 0;
             this.gbCreateNewProject.TabStop = false;
             this.gbCreateNewProject.Text = "Project";
@@ -66,18 +68,21 @@
             this.cbCopyFolder.AutoSize = true;
             this.cbCopyFolder.Checked = true;
             this.cbCopyFolder.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbCopyFolder.Location = new System.Drawing.Point(325, 94);
+            this.cbCopyFolder.Enabled = false;
+            this.cbCopyFolder.Location = new System.Drawing.Point(379, 108);
+            this.cbCopyFolder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cbCopyFolder.Name = "cbCopyFolder";
-            this.cbCopyFolder.Size = new System.Drawing.Size(82, 17);
+            this.cbCopyFolder.Size = new System.Drawing.Size(90, 19);
             this.cbCopyFolder.TabIndex = 8;
             this.cbCopyFolder.Text = "Copy Folder";
             this.cbCopyFolder.UseVisualStyleBackColor = true;
             // 
             // bSourceFolder
             // 
-            this.bSourceFolder.Location = new System.Drawing.Point(287, 90);
+            this.bSourceFolder.Location = new System.Drawing.Point(335, 104);
+            this.bSourceFolder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bSourceFolder.Name = "bSourceFolder";
-            this.bSourceFolder.Size = new System.Drawing.Size(32, 23);
+            this.bSourceFolder.Size = new System.Drawing.Size(37, 27);
             this.bSourceFolder.TabIndex = 7;
             this.bSourceFolder.Text = "...";
             this.bSourceFolder.UseVisualStyleBackColor = true;
@@ -85,25 +90,28 @@
             // 
             // tbSourceFolder
             // 
-            this.tbSourceFolder.Location = new System.Drawing.Point(96, 90);
+            this.tbSourceFolder.Location = new System.Drawing.Point(112, 104);
+            this.tbSourceFolder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbSourceFolder.Name = "tbSourceFolder";
-            this.tbSourceFolder.Size = new System.Drawing.Size(185, 20);
+            this.tbSourceFolder.Size = new System.Drawing.Size(215, 23);
             this.tbSourceFolder.TabIndex = 6;
             // 
             // lSourceFolder
             // 
             this.lSourceFolder.AutoSize = true;
-            this.lSourceFolder.Location = new System.Drawing.Point(7, 90);
+            this.lSourceFolder.Location = new System.Drawing.Point(8, 104);
+            this.lSourceFolder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lSourceFolder.Name = "lSourceFolder";
-            this.lSourceFolder.Size = new System.Drawing.Size(76, 13);
+            this.lSourceFolder.Size = new System.Drawing.Size(82, 15);
             this.lSourceFolder.TabIndex = 5;
             this.lSourceFolder.Text = "Source Folder:";
             // 
             // bLocationProject
             // 
-            this.bLocationProject.Location = new System.Drawing.Point(287, 51);
+            this.bLocationProject.Location = new System.Drawing.Point(335, 59);
+            this.bLocationProject.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bLocationProject.Name = "bLocationProject";
-            this.bLocationProject.Size = new System.Drawing.Size(32, 23);
+            this.bLocationProject.Size = new System.Drawing.Size(37, 27);
             this.bLocationProject.TabIndex = 4;
             this.bLocationProject.Text = "...";
             this.bLocationProject.UseVisualStyleBackColor = true;
@@ -111,41 +119,46 @@
             // 
             // tbLocationProject
             // 
-            this.tbLocationProject.Location = new System.Drawing.Point(68, 51);
+            this.tbLocationProject.Location = new System.Drawing.Point(79, 59);
+            this.tbLocationProject.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbLocationProject.Name = "tbLocationProject";
-            this.tbLocationProject.Size = new System.Drawing.Size(213, 20);
+            this.tbLocationProject.Size = new System.Drawing.Size(248, 23);
             this.tbLocationProject.TabIndex = 3;
             // 
             // lLocationProject
             // 
             this.lLocationProject.AutoSize = true;
-            this.lLocationProject.Location = new System.Drawing.Point(7, 55);
+            this.lLocationProject.Location = new System.Drawing.Point(8, 63);
+            this.lLocationProject.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lLocationProject.Name = "lLocationProject";
-            this.lLocationProject.Size = new System.Drawing.Size(51, 13);
+            this.lLocationProject.Size = new System.Drawing.Size(56, 15);
             this.lLocationProject.TabIndex = 2;
             this.lLocationProject.Text = "Location:";
             // 
             // tbNameProject
             // 
-            this.tbNameProject.Location = new System.Drawing.Point(52, 17);
+            this.tbNameProject.Location = new System.Drawing.Point(61, 20);
+            this.tbNameProject.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbNameProject.Name = "tbNameProject";
-            this.tbNameProject.Size = new System.Drawing.Size(229, 20);
+            this.tbNameProject.Size = new System.Drawing.Size(266, 23);
             this.tbNameProject.TabIndex = 1;
             // 
             // lNameProject
             // 
             this.lNameProject.AutoSize = true;
-            this.lNameProject.Location = new System.Drawing.Point(7, 20);
+            this.lNameProject.Location = new System.Drawing.Point(8, 23);
+            this.lNameProject.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lNameProject.Name = "lNameProject";
-            this.lNameProject.Size = new System.Drawing.Size(38, 13);
+            this.lNameProject.Size = new System.Drawing.Size(42, 15);
             this.lNameProject.TabIndex = 0;
             this.lNameProject.Text = "Name:";
             // 
             // bOK
             // 
-            this.bOK.Location = new System.Drawing.Point(23, 151);
+            this.bOK.Location = new System.Drawing.Point(27, 174);
+            this.bOK.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bOK.Name = "bOK";
-            this.bOK.Size = new System.Drawing.Size(75, 23);
+            this.bOK.Size = new System.Drawing.Size(88, 27);
             this.bOK.TabIndex = 9;
             this.bOK.Text = "OK";
             this.bOK.UseVisualStyleBackColor = true;
@@ -153,9 +166,10 @@
             // 
             // bCancel
             // 
-            this.bCancel.Location = new System.Drawing.Point(138, 151);
+            this.bCancel.Location = new System.Drawing.Point(161, 174);
+            this.bCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bCancel.Name = "bCancel";
-            this.bCancel.Size = new System.Drawing.Size(75, 23);
+            this.bCancel.Size = new System.Drawing.Size(88, 27);
             this.bCancel.TabIndex = 10;
             this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
@@ -163,12 +177,13 @@
             // 
             // CreateNewProject
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 185);
+            this.ClientSize = new System.Drawing.Size(506, 213);
             this.Controls.Add(this.bCancel);
             this.Controls.Add(this.gbCreateNewProject);
             this.Controls.Add(this.bOK);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "CreateNewProject";
             this.Text = "Create New Project";
             this.Load += new System.EventHandler(this.CreateNewProject_Load);

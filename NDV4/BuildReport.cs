@@ -29,5 +29,22 @@ namespace NDV4
             }            
         }
 
+        public void buildReportInFile(int index)
+        {
+            ExportInFile export = new ExportInFile();
+
+            switch (index)
+            {
+                case 0:
+                    export.ExportInFileFoundMarker();
+                    break;
+                case 1:
+                    export.ExportInFileNotFoundMarker();
+                    break;
+                case 2:
+                    export.ExportInFileFoundInBinMarker();
+                    break;
+            }
+        }
     }
 }

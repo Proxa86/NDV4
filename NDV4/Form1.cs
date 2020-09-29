@@ -18,6 +18,9 @@ namespace NDV4
         public static bool CheckSharp { get; set; }
         public static bool CheckC { get; set; }
         public static bool CheckFortran { get; set; }
+        public static bool CheckOptimization { get; set; }
+        public static bool CheckExcel { get; set; }
+        public static bool CheckFileTxt { get; set; }
         public Form1()
         {
             
@@ -33,23 +36,37 @@ namespace NDV4
             this.buttonExcel.Enabled = false;
             this.bStartAnalysis.Enabled = false;
 
+            this.cbOptimizer.Enabled = false;
+            this.cbExcel.Enabled = false;
+            this.cbFile.Enabled = false;
+
             this.createStripMenuItem.Click += new EventHandler(this.createStripMenuItem_Click);
             
         }
 
         private void buttonExcel_Click(object sender, EventArgs e)
         {
-            bStartAnalysis.Enabled = false;
-            //LInformation = "Waiting ...";
-            BuildReport buildReport = new BuildReport();
-            buildReport.buildReportExcel(listBoxReport.SelectedIndex);        
-            //LInformation = "Building report - OK";
-            bStartAnalysis.Enabled = true;
+            if(CheckExcel)
+            {
+                bStartAnalysis.Enabled = false;
+                //LInformation = "Waiting ...";
+                BuildReport buildReport = new BuildReport();
+                buildReport.buildReportExcel(listBoxReport.SelectedIndex);
+                //LInformation = "Building report - OK";
+                bStartAnalysis.Enabled = true;
+            }
+            else if(CheckFileTxt)
+            {
+                ExportInFile export = new ExportInFile();
+
+            }
+            
             
         }
 
         private void buttonInsertMarker_Click(object sender, EventArgs e)
         {
+
             //LInformation = "Waiting ...";
             OpenFolder openFolder = new OpenFolder();
             openFolder.insertMarkerInFile();
@@ -62,9 +79,11 @@ namespace NDV4
             {
                 CreateNewProject createNewProject = new CreateNewProject(bInsertMarker);
                 createNewProject.Show();
+                this.cbOptimizer.Enabled = true;
             }
             else
                 MessageBox.Show("Please, choice language!");
+
         }
 
         private void openStripMenuItem_Click(object sender, EventArgs e)
@@ -73,6 +92,8 @@ namespace NDV4
             OpenFile openFileDB = new OpenFile(bStartAnalysis);
             openFileDB.openFileDB();
             buttonExcel.Enabled = true;
+            this.cbExcel.Enabled = true;
+            this.cbFile.Enabled = true;
         }
 
         private void cBSharp_CheckedChanged(object sender, EventArgs e)
@@ -136,6 +157,33 @@ namespace NDV4
             FindTmpMarker findTmpMarker = new FindTmpMarker();
             findTmpMarker.findTmpMarkerWithBin();
 
+        }
+
+        private void cbOptimizer_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                CheckOptimization = true;
+            }
+        }
+
+        private void cbExcel_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                CheckExcel = true;
+            }
+        }
+
+        private void cbFile_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                CheckFileTxt = true;
+            }
         }
     }
 }

@@ -13,36 +13,34 @@ using System.IO;
 
 namespace NDV4
 {
-    class WorkExcel
+    class ExportInFile
     {
+                
         public SQLiteConnection DbConn { get; set; }
 
         public SQLiteCommand SqlCmd { get; set; }
         public string PathLocation { get; set; }
         public string SqlQuery { get; set; }
         public string PathFolderBin { get; set; }
-        public WorkExcel()
+        public ExportInFile()
         {
             DbConn = InfoOpenProject.DbConn;
             SqlCmd = InfoOpenProject.SqlCmd;
             PathLocation = InfoOpenProject.PathLocation;
-
-            
 
             if (DbConn == null || DbConn.State != ConnectionState.Open)
             {
                 MessageBox.Show("Open connection with database");
                 return;
             }
-            else if(PathLocation == null)
+            else if (PathLocation == null)
             {
                 MessageBox.Show("Open connection with database");
                 return;
             }
-
         }
 
-        public void DisplayInExcelFoundMarker()
+        public void ExportInFileFoundMarker()
         {
             if (DbConn == null)
                 return;
@@ -53,45 +51,38 @@ namespace NDV4
 
             try
             {
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                using (var package = new ExcelPackage())
+                string nameExportFile = @"files_with_all_found_marker.txt";
+
+                DataTable dTableSrc = new DataTable();
+                SqlQuery = "SELECT * FROM WorkMarker WHERE markerInBin = 1";
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
+                adapter.Fill(dTableSrc);
+
+                if (dTableSrc.Rows.Count > 0)
                 {
-                    var worksheet = package.Workbook.Worksheets.Add("Found marker");
-                    worksheet.Cells[1, 1].Value = "Number marker";
-                    worksheet.Cells[1, 2].Value = "Path";
-
-                    DataTable dTableSrc = new DataTable();
-                    SqlQuery = "SELECT * FROM WorkMarker WHERE markerInBin = 1";
-                    SQLiteDataAdapter adapter = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
-                    adapter.Fill(dTableSrc);
-
-                    int i;
-                    //
-                    if (dTableSrc.Rows.Count > 0)
+                    using (FileStream fs = new FileStream($"{PathLocation}\\{nameExportFile}", FileMode.OpenOrCreate))
                     {
-                        for (i = 0; i < dTableSrc.Rows.Count; i++)
+                        using (StreamWriter sw = new StreamWriter(fs, Encoding.Default))
                         {
-                            string pathSrcLab = dTableSrc.Rows[i].ItemArray[4].ToString();
-                            string marker = dTableSrc.Rows[i].ItemArray[6].ToString();
-                            worksheet.Cells["A" + (i+2)].Value = marker;
-                            worksheet.Cells["B" + (i+2)].Value = pathSrcLab;
+                            for (int i = 0; i < dTableSrc.Rows.Count; i++)
+                            {
+                                string pathSrcLab = dTableSrc.Rows[i].ItemArray[4].ToString();
+                                string marker = dTableSrc.Rows[i].ItemArray[6].ToString();
+
+                                sw.WriteLine($"{marker}\t{pathSrcLab}");
+                            }
                         }
-                        worksheet.Cells.AutoFitColumns(1);
+                            
                     }
-                    package.SaveAs(new FileInfo("Found marker.xlsx"));
                 }
-            }
-            catch (System.Runtime.InteropServices.COMException ex)
-            {
-                MessageBox.Show("Excel bloked.\n" + ex.Message);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Excel don't install!\n" + ex.Message);
+                MessageBox.Show("Write file.\n" + ex.Message);
             }
         }
 
-        public void DisplayInExcelFoundInBinMarker()
+        public void ExportInFileFoundInBinMarker()
         {
             if (DbConn == null)
                 return;
@@ -103,12 +94,12 @@ namespace NDV4
             try
             {
                 DataTable dTableBinName = new DataTable();
-                 
+
                 SqlQuery = "SELECT * FROM BinName";
                 SQLiteDataAdapter adapterBin = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
                 adapterBin.Fill(dTableBinName);
 
-                int i,j,k=1;
+                int i, j, k = 1;
 
 
                 if (dTableBinName.Rows.Count > 0)
@@ -123,7 +114,7 @@ namespace NDV4
                         for (i = 0; i < dTableBinName.Rows.Count; i++)
                         {
                             string pathBin = dTableBinName.Rows[i].ItemArray[3].ToString();
-                            worksheet.Cells["A"+ (k + 1)].Value = pathBin;
+                            worksheet.Cells["A" + (k + 1)].Value = pathBin;
                             string idBin = dTableBinName.Rows[i].ItemArray[1].ToString();
 
                             DataTable dTableBinMarker = new DataTable();
@@ -155,7 +146,7 @@ namespace NDV4
                     }
                 }
             }
-            catch(System.Runtime.InteropServices.COMException ex)
+            catch (System.Runtime.InteropServices.COMException ex)
             {
                 MessageBox.Show("Excel bloked.\n" + ex.Message);
             }
@@ -166,7 +157,7 @@ namespace NDV4
 
 
         }
-        public void DisplayInExcelNotFoundMarker()
+        public void ExportInFileNotFoundMarker()
         {
             if (DbConn == null)
                 return;
@@ -180,11 +171,11 @@ namespace NDV4
                 MessageBox.Show("Please, choose language!");
                 return;
             }
-                
+
             try
             {
                 DataTable dTableSrc = new DataTable();
-                if(Form1.CheckSharp)
+                if (Form1.CheckSharp)
                 {
                     SqlQuery = "SELECT pathLabFiles, marker FROM WorkMarker WHERE extension = '.cs' AND markerInBin is NULL";
                     SQLiteDataAdapter adapter_cs = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
@@ -193,8 +184,8 @@ namespace NDV4
                     SQLiteDataAdapter adapter_CS = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);
                     adapter_CS.Fill(dTableSrc);
                 }
-                    
-                else if(Form1.CheckC)
+
+                else if (Form1.CheckC)
                 {
                     SqlQuery = "SELECT pathLabFiles, marker FROM WorkMarker WHERE extension = '.c' AND markerInBin is NULL";
                     SQLiteDataAdapter adapter_c = new SQLiteDataAdapter(SqlQuery, InfoOpenProject.DbConn);

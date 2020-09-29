@@ -13,46 +13,6 @@ namespace NDV4
         public string PathNewLocation { get; set; }
         public string PathSourcesFolder { get; set; }
 
-        //public void openFolderWithSrc()
-        //{
-        //    FolderBrowserDialog fbd = new FolderBrowserDialog();
-        //    fbd.SelectedPath = @"C:\";
-        //    fbd.ShowNewFolderButton = false;
-
-        //    if(fbd.ShowDialog() == DialogResult.OK)
-        //    {
-        //        try
-        //        {
-        //            FindTmpMarker findTmpMarker = new FindTmpMarker(fbd);
-        //            findTmpMarker.findTmpMarkerWithSrc();
-        //        }
-        //        catch(Exception e)
-        //        {
-        //            MessageBox.Show("Error: can't open folder.\nOriginal error: "+ e.Message);
-        //        }
-        //    }
-        //}
-
-        //public void openFolderWithBin()
-        //{
-        //    FolderBrowserDialog fbd = new FolderBrowserDialog();
-        //    fbd.SelectedPath = @"C:\";
-        //    fbd.ShowNewFolderButton = false;
-
-        //    if (fbd.ShowDialog() == DialogResult.OK)
-        //    {
-        //        try
-        //        {
-        //            FindTmpMarker findTmpMarker = new FindTmpMarker(fbd);
-        //            findTmpMarker.findTmpMarkerWithBin();
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            MessageBox.Show("Error: can't open folder.\nOriginal error: " + e.Message);
-        //        }
-        //    }
-        //}
-
         public void openFolderWithSrcForInsertMarker()
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();

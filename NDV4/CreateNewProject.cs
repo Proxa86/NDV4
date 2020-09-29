@@ -49,11 +49,8 @@ namespace NDV4
         private void CreateNewProject_Load(object sender, EventArgs e)
         {
             DbConn = new SQLiteConnection();
-            SqlCmd = new SQLiteCommand();
-
-            
+            SqlCmd = new SQLiteCommand();           
         }
-
 
         private void bLocationProject_Click(object sender, EventArgs e)
         {            
