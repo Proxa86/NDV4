@@ -168,16 +168,28 @@ class tmp{1}{{}}
                                 {
                                     await sw.WriteLineAsync(String.Format(
         @"
-#pragma GCC optimize 0
 #pragma GCC diagnostic ignored ""-Wunused-function""
 #ifndef NUM_MARKER{0}
 #define NUM_MARKER{1}
-static void tmp{2}(){{}};
+static int tmp{2}[1]{{}};
 #endif", i.ToString("00000000"), i.ToString("00000000"), i.ToString("00000000")));
 
 
                                     sw.Close();
                                 }
+                                //                                using (StreamWriter sw = new StreamWriter(new FileStream(pathSrcLab, FileMode.Append)))
+                                //                                {
+                                //                                    await sw.WriteLineAsync(String.Format(
+                                //        @"
+                                //#pragma GCC diagnostic ignored ""-Wunused-function""
+                                //#ifndef NUM_MARKER{0}
+                                //#define NUM_MARKER{1}
+                                //static void tmp{2}(){{}};
+                                //#endif", i.ToString("00000000"), i.ToString("00000000"), i.ToString("00000000")));
+
+
+                                //                                    sw.Close();
+                                //                                }
                             }
                             else if (Form1.CheckFortran)
                             {
@@ -222,10 +234,10 @@ static void tmp{2}(){{}};
                     MessageBox.Show("Insert " + i + " markers.");
 
 
-                    if (Form1.CheckOptimization)
+                    if (Form1.CheckOptimQmake)
                     {
                         dTable = new DataTable();
-                        sqlQuery = "SELECT pathLabFiles FROM WorkMarker WHERE nameFile = 'Makefile' OR nameFile = 'Makefile.Release' OR extension = '.pro'";
+                        sqlQuery = "SELECT pathLabFiles FROM WorkMarker WHERE nameFile = 'Makefile' OR nameFile = 'Makefile.Release' OR nameFile = 'Makefile.Debug'";
                         SQLiteDataAdapter adapter = new SQLiteDataAdapter(sqlQuery, DbConn);
                         adapter.Fill(dTable);
                         if (dTable.Rows.Count > 0)
@@ -241,6 +253,31 @@ static void tmp{2}(){{}};
                                 File.WriteAllText(pathSrcLab, text);
                             }
                         }
+
+                        dTable = new DataTable();
+                        sqlQuery = "SELECT pathLabFiles FROM WorkMarker WHERE extension = '.pro'";
+                        adapter = new SQLiteDataAdapter(sqlQuery, DbConn);
+                        adapter.Fill(dTable);
+
+                        if (dTable.Rows.Count > 0)
+                        {
+                            for(i = 0; i < dTable.Rows.Count; i++)
+                            {
+                                string pathSrcLab = dTable.Rows[i].ItemArray[0].ToString();
+                                using (StreamWriter sw = new StreamWriter(new FileStream(pathSrcLab, FileMode.Append)))
+                                {
+                                    await sw.WriteLineAsync(String.Format(
+        @"
+CONFIG += debug
+QMAKE_CXXFLAGS_RELEASE -= -O1 -O2 -O3 -Os
+QMAKE_CXXFLAGS_RELEASE += -O0
+QMAKE_CFLAGS_RELEASE -= -O1 -O2 -O3 -Os
+QMAKE_CFLAGS_RELEASE += -O0"));
+                                    sw.Close();
+                                }
+                            }
+                        }
+                        
                     }
                 }
                 else

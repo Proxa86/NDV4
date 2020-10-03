@@ -43,7 +43,7 @@
             this.cBCpp = new System.Windows.Forms.CheckBox();
             this.cBFatran = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.cbOptimizer = new System.Windows.Forms.CheckBox();
+            this.cbOptimQmake = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.cbFile = new System.Windows.Forms.CheckBox();
@@ -235,20 +235,20 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Language";
             // 
-            // cbOptimizer
+            // cbOptimQmake
             // 
-            this.cbOptimizer.AutoSize = true;
-            this.cbOptimizer.Location = new System.Drawing.Point(6, 18);
-            this.cbOptimizer.Name = "cbOptimizer";
-            this.cbOptimizer.Size = new System.Drawing.Size(68, 19);
-            this.cbOptimizer.TabIndex = 14;
-            this.cbOptimizer.Text = "Turn off";
-            this.cbOptimizer.UseVisualStyleBackColor = true;
-            this.cbOptimizer.CheckedChanged += new System.EventHandler(this.cbOptimizer_CheckedChanged);
+            this.cbOptimQmake.AutoSize = true;
+            this.cbOptimQmake.Location = new System.Drawing.Point(6, 18);
+            this.cbOptimQmake.Name = "cbOptimQmake";
+            this.cbOptimQmake.Size = new System.Drawing.Size(82, 19);
+            this.cbOptimQmake.TabIndex = 14;
+            this.cbOptimQmake.Text = "Off qmake";
+            this.cbOptimQmake.UseVisualStyleBackColor = true;
+            this.cbOptimQmake.CheckedChanged += new System.EventHandler(this.cbOptimQmake_CheckedChanged);
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.cbOptimizer);
+            this.groupBox5.Controls.Add(this.cbOptimQmake);
             this.groupBox5.Location = new System.Drawing.Point(159, 80);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(91, 43);
@@ -342,7 +342,7 @@
         private System.Windows.Forms.CheckBox cBCpp;
         private System.Windows.Forms.CheckBox cBFatran;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.CheckBox cbOptimizer;
+        private System.Windows.Forms.CheckBox cbOptimQmake;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckBox cbFile;

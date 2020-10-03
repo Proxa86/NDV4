@@ -18,7 +18,7 @@ namespace NDV4
         public static bool CheckSharp { get; set; }
         public static bool CheckC { get; set; }
         public static bool CheckFortran { get; set; }
-        public static bool CheckOptimization { get; set; }
+        public static bool CheckOptimQmake { get; set; }
         public static bool CheckExcel { get; set; }
         public static bool CheckFileTxt { get; set; }
         public Form1()
@@ -36,7 +36,7 @@ namespace NDV4
             this.buttonExcel.Enabled = false;
             this.bStartAnalysis.Enabled = false;
 
-            this.cbOptimizer.Enabled = false;
+            this.cbOptimQmake.Enabled = false;
             this.cbExcel.Enabled = false;
             this.cbFile.Enabled = false;
 
@@ -46,7 +46,7 @@ namespace NDV4
 
         private void buttonExcel_Click(object sender, EventArgs e)
         {
-            if(CheckExcel)
+            if(CheckExcel & !CheckFileTxt)
             {
                 bStartAnalysis.Enabled = false;
                 //LInformation = "Waiting ...";
@@ -55,10 +55,20 @@ namespace NDV4
                 //LInformation = "Building report - OK";
                 bStartAnalysis.Enabled = true;
             }
-            else if(CheckFileTxt)
+            if(CheckFileTxt & !CheckExcel)
             {
-                ExportInFile export = new ExportInFile();
-
+                bStartAnalysis.Enabled = false;
+                BuildReport buildReport = new BuildReport();
+                buildReport.buildReportInFile(listBoxReport.SelectedIndex);
+                bStartAnalysis.Enabled = true;
+            }
+            if(CheckExcel & CheckFileTxt)
+            {
+                bStartAnalysis.Enabled = false;
+                BuildReport buildReport = new BuildReport();
+                buildReport.buildReportExcel(listBoxReport.SelectedIndex);
+                buildReport.buildReportInFile(listBoxReport.SelectedIndex);
+                bStartAnalysis.Enabled = true;
             }
             
             
@@ -79,7 +89,7 @@ namespace NDV4
             {
                 CreateNewProject createNewProject = new CreateNewProject(bInsertMarker);
                 createNewProject.Show();
-                this.cbOptimizer.Enabled = true;
+                this.cbOptimQmake.Enabled = true;
             }
             else
                 MessageBox.Show("Please, choice language!");
@@ -159,12 +169,12 @@ namespace NDV4
 
         }
 
-        private void cbOptimizer_CheckedChanged(object sender, EventArgs e)
+        private void cbOptimQmake_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
-                CheckOptimization = true;
+                CheckOptimQmake = true;
             }
         }
 
@@ -174,7 +184,9 @@ namespace NDV4
             if (checkBox.Checked == true)
             {
                 CheckExcel = true;
+                //CheckFileTxt = false;
             }
+            else CheckExcel = false;
         }
 
         private void cbFile_CheckedChanged(object sender, EventArgs e)
@@ -183,7 +195,9 @@ namespace NDV4
             if (checkBox.Checked == true)
             {
                 CheckFileTxt = true;
+                //CheckExcel = false;
             }
+            else CheckFileTxt = false;
         }
     }
 }
