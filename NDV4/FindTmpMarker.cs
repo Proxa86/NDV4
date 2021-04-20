@@ -41,6 +41,8 @@ namespace NDV4
                 SqlCmd.ExecuteNonQuery();
                 SqlCmd.CommandText = @"DELETE FROM BinName";
                 SqlCmd.ExecuteNonQuery();
+                SqlCmd.CommandText = @"UPDATE WorkMarker SET markerInBin = NULL";
+                SqlCmd.ExecuteNonQuery();
 
                 using (SQLiteTransaction transation = SqlCmd.Connection.BeginTransaction())
                 {

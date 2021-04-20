@@ -110,7 +110,7 @@ namespace NDV4
                             for (int i = 0; i < dTableBinName.Rows.Count; i++)
                             {
                                 string pathBin = dTableBinName.Rows[i].ItemArray[3].ToString();
-                                sw.WriteLine($"{pathBin}\n");
+                                sw.WriteLine($"{pathBin}");
                                 string idBin = dTableBinName.Rows[i].ItemArray[1].ToString();
 
                                 DataTable dTableBinMarker = new DataTable();

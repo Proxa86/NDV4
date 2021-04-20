@@ -109,7 +109,7 @@ namespace NDV4
                     sqlQuery = "SELECT * FROM WorkMarker WHERE extension = '.HPP'";
                     SQLiteDataAdapter adapter_HPP = new SQLiteDataAdapter(sqlQuery, DbConn);
                     adapter_HPP.Fill(dTable);
-                    sqlQuery = "SELECT * FROM WorkMarker WHERE extension = '.hхх'";
+                    sqlQuery = "SELECT * FROM WorkMarker WHERE extension = '.hxx'";
                     SQLiteDataAdapter adapter_hxx = new SQLiteDataAdapter(sqlQuery, DbConn);
                     adapter_hxx.Fill(dTable);
                     sqlQuery = "SELECT * FROM WorkMarker WHERE extension = '.HXX'";
@@ -155,7 +155,10 @@ namespace NDV4
                                     await sw.WriteLineAsync(String.Format(
         @"
 #if !NUM_MARKER{0}
-class tmp{1}{{}}
+class tmp{1}
+{{
+    tmp{1}(){{}}
+}}
 #endif", i.ToString("00000000"), i.ToString("00000000")));
 
 
@@ -168,11 +171,11 @@ class tmp{1}{{}}
                                 {
                                     await sw.WriteLineAsync(String.Format(
         @"
-#pragma GCC diagnostic ignored ""-Wunused-function""
+#pragma GCC diagnostic ignored ""-Wunused-variable""
 #ifndef NUM_MARKER{0}
 #define NUM_MARKER{1}
-static int tmp{2}[1]{{}};
-#endif", i.ToString("00000000"), i.ToString("00000000"), i.ToString("00000000")));
+static int tmp{2}[1]={{{3}}};
+#endif", i.ToString("00000000"), i.ToString("00000000"),i.ToString("00000000"), i));
 
 
                                     sw.Close();

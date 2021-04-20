@@ -150,7 +150,7 @@ namespace NDV4
                             }
                             ++k;
                         }
-                        worksheet.Cells.AutoFitColumns(1);
+                        //worksheet.Cells.AutoFitColumns(1);
                         package.SaveAs(new FileInfo(PathLocation + "\\Found marker in bin.xlsx"));
                     }
                 }
@@ -282,6 +282,10 @@ namespace NDV4
                         worksheet.Cells.AutoFitColumns(1);
                         package.SaveAs(new FileInfo(PathLocation + "\\Not found marker in bin.xlsx"));
                     }
+                }
+                else
+                {
+                    MessageBox.Show("All files *.cs in bin.");
                 }
             }
             catch (System.Runtime.InteropServices.COMException ex)
