@@ -18,9 +18,11 @@ namespace NDV4
         public static bool CheckSharp { get; set; }
         public static bool CheckC { get; set; }
         public static bool CheckFortran { get; set; }
+        public static bool CheckPascal { get; set; }
         public static bool CheckOptimQmake { get; set; }
         public static bool CheckExcel { get; set; }
         public static bool CheckFileTxt { get; set; }
+        public static bool CheckClearResultBin { get; set; }
         public Form1()
         {
             
@@ -85,7 +87,7 @@ namespace NDV4
 
         private void createStripMenuItem_Click(object sender, EventArgs e)
         {            
-            if (CheckC || CheckSharp || CheckFortran)
+            if (CheckC || CheckSharp || CheckFortran || CheckPascal)
             {
                 CreateNewProject createNewProject = new CreateNewProject(bInsertMarker);
                 createNewProject.Show();
@@ -114,13 +116,17 @@ namespace NDV4
                 CheckSharp = true;
                 CheckC = false;
                 CheckFortran = false;
+                CheckPascal = false;
+
                 cBCpp.Enabled = false;
-                cBFatran.Enabled = false;
+                cBFortran.Enabled = false;
+                //cBPascal.Enabled = false;
             }
             else
             {
                 cBCpp.Enabled = true;
-                cBFatran.Enabled = true;
+                cBFortran.Enabled = true;
+                //cBPascal.Enabled = true;
             }
                 
         }
@@ -133,13 +139,17 @@ namespace NDV4
                 CheckC = true;
                 CheckSharp = false;
                 CheckFortran = false;
+                CheckPascal = false;
+
                 cBSharp.Enabled = false;
-                cBFatran.Enabled = false;
+                cBFortran.Enabled = false;
+                //cBPascal.Enabled = false;
             }
             else
             {
                 cBSharp.Enabled = true;
-                cBFatran.Enabled = true;
+                cBFortran.Enabled = true;
+                //cBPascal.Enabled = true;
             }
                 
         }
@@ -152,13 +162,39 @@ namespace NDV4
                 CheckC = false;
                 CheckSharp = false;
                 CheckFortran = true;
+                CheckPascal = false;
+
                 cBSharp.Enabled = false;
                 cBCpp.Enabled = false;
+                //cBPascal.Enabled = false;
             }
             else
             {
                 cBSharp.Enabled = true;
                 cBCpp.Enabled = true;
+                //cBPascal.Enabled = true;
+            }
+        }
+
+        private void cBPascal_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                CheckC = false;
+                CheckSharp = false;
+                CheckFortran = false;
+                CheckPascal = true;
+
+                cBSharp.Enabled = false;
+                cBCpp.Enabled = false;
+                cBFortran.Enabled = false;
+            }
+            else
+            {
+                cBSharp.Enabled = true;
+                cBCpp.Enabled = true;
+                cBFortran.Enabled = true;
             }
         }
 
@@ -198,6 +234,17 @@ namespace NDV4
                 //CheckExcel = false;
             }
             else CheckFileTxt = false;
+        }
+
+        private void cBClearResultBin_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                CheckClearResultBin = true;
+                //CheckExcel = false;
+            }
+            else CheckClearResultBin = false;
         }
     }
 }

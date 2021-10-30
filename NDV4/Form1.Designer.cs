@@ -41,13 +41,15 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cBSharp = new System.Windows.Forms.CheckBox();
             this.cBCpp = new System.Windows.Forms.CheckBox();
-            this.cBFatran = new System.Windows.Forms.CheckBox();
+            this.cBFortran = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cbOptimQmake = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.cbFile = new System.Windows.Forms.CheckBox();
             this.cbExcel = new System.Windows.Forms.CheckBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cBClearResultBin = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -55,6 +57,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonExcel
@@ -87,10 +90,10 @@
             this.bInsertMarker.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.bInsertMarker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.bInsertMarker.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.bInsertMarker.Location = new System.Drawing.Point(7, 18);
+            this.bInsertMarker.Location = new System.Drawing.Point(6, 18);
             this.bInsertMarker.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bInsertMarker.Name = "bInsertMarker";
-            this.bInsertMarker.Size = new System.Drawing.Size(117, 68);
+            this.bInsertMarker.Size = new System.Drawing.Size(124, 68);
             this.bInsertMarker.TabIndex = 5;
             this.bInsertMarker.Text = "Insert marker";
             this.bInsertMarker.UseVisualStyleBackColor = false;
@@ -151,11 +154,11 @@
             // 
             this.groupBox3.Controls.Add(this.bInsertMarker);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox3.Location = new System.Drawing.Point(14, 31);
+            this.groupBox3.Location = new System.Drawing.Point(7, 31);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox3.Size = new System.Drawing.Size(131, 93);
+            this.groupBox3.Size = new System.Drawing.Size(138, 93);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Insert marker";
@@ -209,22 +212,22 @@
             this.cBCpp.UseVisualStyleBackColor = true;
             this.cBCpp.CheckedChanged += new System.EventHandler(this.cBCpp_CheckedChanged);
             // 
-            // cBFatran
+            // cBFortran
             // 
-            this.cBFatran.AutoSize = true;
-            this.cBFatran.Location = new System.Drawing.Point(127, 16);
-            this.cBFatran.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cBFatran.Name = "cBFatran";
-            this.cBFatran.Size = new System.Drawing.Size(59, 19);
-            this.cBFatran.TabIndex = 12;
-            this.cBFatran.Text = "Fatran";
-            this.cBFatran.UseVisualStyleBackColor = true;
-            this.cBFatran.CheckedChanged += new System.EventHandler(this.cBFatran_CheckedChanged);
+            this.cBFortran.AutoSize = true;
+            this.cBFortran.Location = new System.Drawing.Point(127, 16);
+            this.cBFortran.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBFortran.Name = "cBFortran";
+            this.cBFortran.Size = new System.Drawing.Size(64, 19);
+            this.cBFortran.TabIndex = 12;
+            this.cBFortran.Text = "Fortran";
+            this.cBFortran.UseVisualStyleBackColor = true;
+            this.cBFortran.CheckedChanged += new System.EventHandler(this.cBFatran_CheckedChanged);
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.cBCpp);
-            this.groupBox4.Controls.Add(this.cBFatran);
+            this.groupBox4.Controls.Add(this.cBFortran);
             this.groupBox4.Controls.Add(this.cBSharp);
             this.groupBox4.Location = new System.Drawing.Point(159, 31);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -289,6 +292,27 @@
             this.cbExcel.UseVisualStyleBackColor = true;
             this.cbExcel.CheckedChanged += new System.EventHandler(this.cbExcel_CheckedChanged);
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.cBClearResultBin);
+            this.groupBox7.Location = new System.Drawing.Point(402, 80);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(100, 43);
+            this.groupBox7.TabIndex = 17;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Clear result";
+            // 
+            // cBClearResultBin
+            // 
+            this.cBClearResultBin.AutoSize = true;
+            this.cBClearResultBin.Location = new System.Drawing.Point(6, 16);
+            this.cBClearResultBin.Name = "cBClearResultBin";
+            this.cBClearResultBin.Size = new System.Drawing.Size(88, 19);
+            this.cBClearResultBin.TabIndex = 0;
+            this.cBClearResultBin.Text = "Clear Result";
+            this.cBClearResultBin.UseVisualStyleBackColor = true;
+            this.cBClearResultBin.CheckedChanged += new System.EventHandler(this.cBClearResultBin_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -297,6 +321,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(533, 245);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -321,6 +346,8 @@
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -340,13 +367,15 @@
         private System.Windows.Forms.Label lBInformation;
         private System.Windows.Forms.CheckBox cBSharp;
         private System.Windows.Forms.CheckBox cBCpp;
-        private System.Windows.Forms.CheckBox cBFatran;
+        private System.Windows.Forms.CheckBox cBFortran;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox cbOptimQmake;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckBox cbFile;
         private System.Windows.Forms.CheckBox cbExcel;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.CheckBox cBClearResultBin;
     }
 }
 

@@ -211,7 +211,7 @@ namespace NDV4
                 return;
             }
 
-            if (!(Form1.CheckSharp || Form1.CheckC || Form1.CheckFortran))
+            if (!(Form1.CheckSharp || Form1.CheckC || Form1.CheckFortran || Form1.CheckPascal))
             {
                 MessageBox.Show("Please, choose language!");
                 return;
@@ -296,6 +296,12 @@ namespace NDV4
                     SQLiteDataAdapter adapter_F = new SQLiteDataAdapter(SqlQuery, DbConn);
                     adapter_F.Fill(dTableSrc);
                 }
+                else if (Form1.CheckPascal)
+                {
+                    SqlQuery = "SELECT pathLabFiles, marker FROM WorkMarker WHERE extension = '.pas' AND markerInBin is NULL";
+                    SQLiteDataAdapter adapter_pas = new SQLiteDataAdapter(SqlQuery, DbConn);
+                    adapter_pas.Fill(dTableSrc);
+                }
 
                 string nameExportFile = @"_file_with_not_found_marker_in_bin.txt";
 
@@ -315,6 +321,10 @@ namespace NDV4
                         }
 
                     }
+                }
+                else
+                {
+                    MessageBox.Show("All files *.cs in bin.");
                 }
                 //int i;
 

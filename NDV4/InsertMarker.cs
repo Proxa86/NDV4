@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data;
 using System.Data.SQLite;
+using System.Text.RegularExpressions;
 
 namespace NDV4
 {
@@ -131,6 +132,12 @@ namespace NDV4
                     SQLiteDataAdapter adapter_F90 = new SQLiteDataAdapter(sqlQuery, DbConn);
                     adapter_F90.Fill(dTable);
                 }
+                else if (Form1.CheckPascal)
+                {
+                    sqlQuery = "SELECT * FROM WorkMarker WHERE extension = '.pas'";
+                    SQLiteDataAdapter adapter_pas = new SQLiteDataAdapter(sqlQuery, DbConn);
+                    adapter_pas.Fill(dTable);
+                }
 
 
                 int i;
@@ -150,7 +157,7 @@ namespace NDV4
 
                             if (Form1.CheckSharp)
                             {
-                                using (StreamWriter sw = new StreamWriter(new FileStream(pathSrcLab, FileMode.Append)))
+                                using (StreamWriter sw = new StreamWriter(new FileStream(pathSrcLab, FileMode.Append), Encoding.Unicode))
                                 {
                                     await sw.WriteLineAsync(String.Format(
         @"
@@ -169,9 +176,9 @@ class tmp{1}
                             {
                                 using (StreamWriter sw = new StreamWriter(new FileStream(pathSrcLab, FileMode.Append)))
                                 {
-                                    await sw.WriteLineAsync(String.Format(
+                                    await sw.WriteLineAsync(String.Format(//#pragma GCC diagnostic ignored ""-Wunused-variable""
         @"
-#pragma GCC diagnostic ignored ""-Wunused-variable""
+
 #ifndef NUM_MARKER{0}
 #define NUM_MARKER{1}
 static int tmp{2}[1]={{{3}}};
@@ -180,19 +187,6 @@ static int tmp{2}[1]={{{3}}};
 
                                     sw.Close();
                                 }
-                                //                                using (StreamWriter sw = new StreamWriter(new FileStream(pathSrcLab, FileMode.Append)))
-                                //                                {
-                                //                                    await sw.WriteLineAsync(String.Format(
-                                //        @"
-                                //#pragma GCC diagnostic ignored ""-Wunused-function""
-                                //#ifndef NUM_MARKER{0}
-                                //#define NUM_MARKER{1}
-                                //static void tmp{2}(){{}};
-                                //#endif", i.ToString("00000000"), i.ToString("00000000"), i.ToString("00000000")));
-
-
-                                //                                    sw.Close();
-                                //                                }
                             }
                             else if (Form1.CheckFortran)
                             {
@@ -209,6 +203,82 @@ static int tmp{2}[1]={{{3}}};
 
                                     sw.Close();
                                 }
+                            }
+                            else if (Form1.CheckPascal)
+                            {
+                                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                                string text = File.ReadAllText(pathSrcLab, Encoding.GetEncoding("windows-1251"));
+
+                                string pattern = "\nuses";
+                                int indexOfUses = text.IndexOf(pattern);
+                                if (indexOfUses != -1)
+                                {
+                                    pattern = ";";
+                                    int indexOfSubstring = text.IndexOf(pattern, indexOfUses);
+                                    if (indexOfSubstring != -1)
+                                    {
+                                        text = text.Insert(indexOfSubstring + pattern.Length, String.Format(
+    @"
+type
+    tmp{0} = class
+    public
+    end;
+", i.ToString("00000000")));
+                                    }
+                                }
+                                else
+                                {
+                                    pattern = "\nUses";
+                                    indexOfUses = text.IndexOf(pattern);
+                                    if (indexOfUses != -1)
+                                    {
+                                        pattern = ";";
+                                        int indexOfSubstring = text.IndexOf(pattern, indexOfUses);
+                                        if (indexOfSubstring != -1)
+                                        {
+                                            text = text.Insert(indexOfSubstring + pattern.Length, String.Format(
+        @"
+type
+    tmp{0} = class
+    public
+    end;
+", i.ToString("00000000")));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        pattern = "\ntype";
+                                        int indexOfType = text.IndexOf(pattern);
+                                        if (indexOfType != -1)
+                                        {
+                                            text = text.Insert(indexOfType + pattern.Length, String.Format(
+        @"
+    tmp{0} = class
+    public
+    end;
+", i.ToString("00000000")));
+                                        }
+                                        else
+                                        {
+                                            pattern = "\ninterface";
+                                            int indexOfTInterface = text.IndexOf(pattern);
+                                            if (indexOfTInterface != -1)
+                                            {
+                                                text = text.Insert(indexOfTInterface + pattern.Length, String.Format(
+            @"
+type
+    tmp{0} = class
+    public
+    end;
+", i.ToString("00000000")));
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                             
+                               File.WriteAllText(pathSrcLab, text, Encoding.GetEncoding("windows-1251"));
+
                             }
                             // Запись в Log.txt находящегося возле бинарника
                             PathLogFile = PathNewLocation + "\\" + NameProject + "\\logInsertMarker.txt";
