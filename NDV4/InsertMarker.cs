@@ -157,7 +157,7 @@ namespace NDV4
 
                             if (Form1.CheckSharp)
                             {
-                                using (StreamWriter sw = new StreamWriter(new FileStream(pathSrcLab, FileMode.Append), Encoding.Unicode))
+                                using (StreamWriter sw = new StreamWriter(new FileStream(pathSrcLab, FileMode.Append)))
                                 {
                                     await sw.WriteLineAsync(String.Format(
         @"

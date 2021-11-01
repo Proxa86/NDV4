@@ -56,7 +56,9 @@ namespace NDV4
                         foreach (var pathBin in filter)
                         {
 
-                            string[] allLinesInFile = File.ReadAllLines(pathBin);
+                            //string[] allLinesInFile = File.ReadAllLines(pathBin);
+
+                            string allText = File.ReadAllText(pathBin);
 
                             SqlCmd.CommandText = @"INSERT INTO BinName 
                                             (idBin,
@@ -75,16 +77,17 @@ namespace NDV4
 
                             SqlCmd.ExecuteNonQuery();
 
-                            foreach (var line in allLinesInFile)
+                            //foreach (var line in allLinesInFile)
+                            //{
+                            string paternFindTmpMarker = "tmp[0-9]{8}";
+
+                            Regex regex = new Regex(paternFindTmpMarker, RegexOptions.Compiled);
+                            //MatchCollection matches = regex.Matches(line);
+                            IEnumerable<string> en = Regex.Matches(allText, paternFindTmpMarker).OfType<Match>().Select(m => m.Groups[0].Value).Distinct();
+                            if(en.Count() > 0)
                             {
-                                string paternFindTmpMarker = "tmp[0-9]{8}";
-
-                                Regex regex = new Regex(paternFindTmpMarker);
-                                Match match = regex.Match(line);
-
-                                while (match.Success)
+                                foreach(var marker in en)
                                 {
-                                    string marker = match.Value;
 
                                     SqlCmd.CommandText = @"UPDATE WorkMarker SET markerInBin = $markerInBin WHERE marker = $marker";
                                     SqlCmd.Parameters.AddWithValue("$markerInBin", "1");
@@ -93,22 +96,52 @@ namespace NDV4
                                     SqlCmd.ExecuteNonQuery();
 
                                     SqlCmd.CommandText = @"INSERT INTO BinMarker 
-                                            (idBin,
-                                            markerBin
-                                            ) 
-                                            VALUES 
-                                            ($idBin,
-                                            $markerBin
-                                            )";
+                                                (idBin,
+                                                markerBin
+                                                ) 
+                                                VALUES 
+                                                ($idBin,
+                                                $markerBin
+                                                )";
 
                                     SqlCmd.Parameters.AddWithValue("$idBin", i);
                                     SqlCmd.Parameters.AddWithValue("$markerBin", marker);
 
                                     SqlCmd.ExecuteNonQuery();
-
-                                    match = match.NextMatch(); // ищем следующее совпадение в текущей строке                       
                                 }
                             }
+
+
+                            //Regex regex = new Regex(paternFindTmpMarker);
+                            //Match match = regex.Match(line);
+
+                            //while (match.Success)
+                            //{
+                            //    string marker = match.Value;
+
+                            //    SqlCmd.CommandText = @"UPDATE WorkMarker SET markerInBin = $markerInBin WHERE marker = $marker";
+                            //    SqlCmd.Parameters.AddWithValue("$markerInBin", "1");
+                            //    SqlCmd.Parameters.AddWithValue("$marker", marker);
+
+                            //    SqlCmd.ExecuteNonQuery();
+
+                            //    SqlCmd.CommandText = @"INSERT INTO BinMarker 
+                            //            (idBin,
+                            //            markerBin
+                            //            ) 
+                            //            VALUES 
+                            //            ($idBin,
+                            //            $markerBin
+                            //            )";
+
+                            //    SqlCmd.Parameters.AddWithValue("$idBin", i);
+                            //    SqlCmd.Parameters.AddWithValue("$markerBin", marker);
+
+                            //    SqlCmd.ExecuteNonQuery();
+
+                            //    match = match.NextMatch(); // ищем следующее совпадение в текущей строке                       
+                            //}
+                            //}
                             ++i;
                         }
                     }

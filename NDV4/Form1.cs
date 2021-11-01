@@ -28,9 +28,9 @@ namespace NDV4
             
             InitializeComponent();
 
-            listBoxReport.Items.Add("Вывести все файлы найденые в бинарниках.");
-            listBoxReport.Items.Add("Вывести избыточные файлы не найденые в бинарниках.");
-            listBoxReport.Items.Add("Вывести файлы входящие в бинарники.");
+            listBoxReport.Items.Add("Все найденные файлы в бинарниках.");
+            listBoxReport.Items.Add("Потенциально - избыточные файлы.");
+            listBoxReport.Items.Add("Какие исходные файлы вошли в бинарник.");
             listBoxReport.SelectedIndex = 1;
 
             this.Text = "Есть ли жизнь на марсе?";
@@ -245,6 +245,11 @@ namespace NDV4
                 //CheckExcel = false;
             }
             else CheckClearResultBin = false;
+        }
+
+        private void groupBox7_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

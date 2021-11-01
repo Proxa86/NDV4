@@ -297,19 +297,22 @@
             this.groupBox7.Controls.Add(this.cBClearResultBin);
             this.groupBox7.Location = new System.Drawing.Point(402, 80);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(100, 43);
+            this.groupBox7.Size = new System.Drawing.Size(119, 43);
             this.groupBox7.TabIndex = 17;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Clear result";
+            this.groupBox7.Text = "Analisys phase";
+            this.groupBox7.Enter += new System.EventHandler(this.groupBox7_Enter);
             // 
             // cBClearResultBin
             // 
             this.cBClearResultBin.AutoSize = true;
+            this.cBClearResultBin.Checked = true;
+            this.cBClearResultBin.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cBClearResultBin.Location = new System.Drawing.Point(6, 16);
             this.cBClearResultBin.Name = "cBClearResultBin";
-            this.cBClearResultBin.Size = new System.Drawing.Size(88, 19);
+            this.cBClearResultBin.Size = new System.Drawing.Size(112, 19);
             this.cBClearResultBin.TabIndex = 0;
-            this.cBClearResultBin.Text = "Clear Result";
+            this.cBClearResultBin.Text = "Delete last result";
             this.cBClearResultBin.UseVisualStyleBackColor = true;
             this.cBClearResultBin.CheckedChanged += new System.EventHandler(this.cBClearResultBin_CheckedChanged);
             // 
