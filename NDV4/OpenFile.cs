@@ -22,17 +22,19 @@ namespace NDV4
         public Button BAnalysis { get; set; }
 
         public string DbFileName { get; set; }
+        public static Form1 form { get; set; }
 
         public OpenFile() {
             DbConn = new SQLiteConnection();
             SqlCmd = new SQLiteCommand();
         }
 
-        public OpenFile (Button bAnalysis)
+        public OpenFile (Button bAnalysis, Form1 f)
         {
             DbConn = new SQLiteConnection();
             SqlCmd = new SQLiteCommand();
             BAnalysis = bAnalysis;
+            form = f;
         }
 
         public void openFileDB()
@@ -55,6 +57,9 @@ namespace NDV4
                     MessageBox.Show("Open connection with database");
                     return;
                 }
+                form.Text = Path.GetFileNameWithoutExtension(DbFileName);
+                form.Refresh();
+
             }
             else
             {

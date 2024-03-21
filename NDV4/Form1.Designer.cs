@@ -50,6 +50,8 @@
             this.cbExcel = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.cBClearResultBin = new System.Windows.Forms.CheckBox();
+            this.lInform = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -301,13 +303,10 @@
             this.groupBox7.TabIndex = 17;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Analisys phase";
-            this.groupBox7.Enter += new System.EventHandler(this.groupBox7_Enter);
             // 
             // cBClearResultBin
             // 
             this.cBClearResultBin.AutoSize = true;
-            this.cBClearResultBin.Checked = true;
-            this.cBClearResultBin.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cBClearResultBin.Location = new System.Drawing.Point(6, 16);
             this.cBClearResultBin.Name = "cBClearResultBin";
             this.cBClearResultBin.Size = new System.Drawing.Size(112, 19);
@@ -315,6 +314,14 @@
             this.cBClearResultBin.Text = "Delete last result";
             this.cBClearResultBin.UseVisualStyleBackColor = true;
             this.cBClearResultBin.CheckedChanged += new System.EventHandler(this.cBClearResultBin_CheckedChanged);
+            // 
+            // lInform
+            // 
+            this.lInform.AutoSize = true;
+            this.lInform.Location = new System.Drawing.Point(7, 222);
+            this.lInform.Name = "lInform";
+            this.lInform.Size = new System.Drawing.Size(0, 15);
+            this.lInform.TabIndex = 18;
             // 
             // Form1
             // 
@@ -324,6 +331,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(533, 245);
+            this.Controls.Add(this.lInform);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
@@ -379,6 +387,8 @@
         private System.Windows.Forms.CheckBox cbExcel;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.CheckBox cBClearResultBin;
+        private System.Windows.Forms.Label lInform;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

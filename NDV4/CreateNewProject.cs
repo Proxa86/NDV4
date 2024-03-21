@@ -292,6 +292,14 @@ namespace NDV4
                 }
             }
 
+            // Отображение навание проекта в заголовке
+            Form1 form = this.Owner as Form1;
+            if(form != null)
+            {
+                form.Text = tbNameProject.Text;
+                Form1.Inform = "Project create";
+            }
+
             new InfoCreateProject(NameProject, PathNewLocation, PathSourcesFolder, DbFileName, DbConn, SqlCmd);
             BInsert.Enabled = true;
             Close();
@@ -302,6 +310,7 @@ namespace NDV4
         {
             Close();
         }
+
     }
 
       

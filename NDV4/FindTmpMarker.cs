@@ -17,10 +17,19 @@ namespace NDV4
         public SQLiteConnection DbConn { get; set; }
 
         public SQLiteCommand SqlCmd { get; set; }
+
+        public static Label label { get; set; }
+
         public FindTmpMarker() 
+        {
+            
+        }
+
+        public FindTmpMarker(Label l)
         {
             DbConn = InfoOpenProject.DbConn;
             SqlCmd = InfoOpenProject.SqlCmd;
+            label = l;
         }
 
         public void findTmpMarkerWithBin()
@@ -55,7 +64,8 @@ namespace NDV4
                         int i = 1;
                         foreach (var pathBin in filter)
                         {
-
+                            label.Text = "Analysis binary ( " + i + " / " + filter.Length + " )";
+                            label.Refresh();
                             //string[] allLinesInFile = File.ReadAllLines(pathBin);
 
                             string allText = File.ReadAllText(pathBin);
@@ -142,13 +152,16 @@ namespace NDV4
                             //    match = match.NextMatch(); // ищем следующее совпадение в текущей строке                       
                             //}
                             //}
+                            
                             ++i;
+                            
                         }
+                        
                     }
                     transation.Commit();
                 }
 
-                MessageBox.Show("Analisys end!");
+                //MessageBox.Show("Analisys end!");
             }
             catch (Exception e)
             {

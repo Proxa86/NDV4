@@ -181,7 +181,7 @@ class tmp{1}
 
 #ifndef NUM_MARKER{0}
 #define NUM_MARKER{1}
-static int tmp{2}[1]={{{3}}};
+static int __attribute__((used)) tmp{2}[1]={{{3}}};
 #endif", i.ToString("00000000"), i.ToString("00000000"),i.ToString("00000000"), i));
 
 
