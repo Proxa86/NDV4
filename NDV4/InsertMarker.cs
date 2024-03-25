@@ -206,7 +206,7 @@ static int __attribute__((used)) tmp{2}[1]={{{3}}};
                             }
                             else if (Form1.CheckPascal)
                             {
-                                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                                //!!!!!!!!!!!!!Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                                 string text = File.ReadAllText(pathSrcLab, Encoding.GetEncoding("windows-1251"));
 
                                 string pattern = "\nuses";
